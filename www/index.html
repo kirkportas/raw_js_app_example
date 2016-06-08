@@ -3,16 +3,19 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="format-detection" content="telephone=no"/>
-    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
     <meta name="viewport"  content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
           <!-- removed from viewport: , target-densitydpi=device-dpi -->
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
-    <link rel="stylesheet" type="text/css" href="css/notification.css" />
 
+    <!-- Jquery + Handlebars -->
     <script type="text/javascript" src="lib/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="lib/handlebars-v1.3.0.js"></script>
+    <script type="text/javascript" src="lib/handlebars-v4.0.5.js"></script>
 
-    <!-- Import home-rolled modules -->
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap-3.3.6/css/bootstrap.min.css" />
+    <script type="text/javascript" src="lib/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- Home-rolled modules -->
     <script type="text/javascript" src="js/core.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/auth.js"></script>
@@ -64,137 +67,67 @@
         {{/each}}
     </script>
 
+    <script id="landing-page" type="text/x-handlebars-template">
 
-    <script id="inventory-items" type="text/x-handlebars-template">
-        {{#each items}}
-        <li>
-            <a href="javascript:inventory.showItemsDetailsView('{{this.id}}')">
-                {{this.plant}}
-                <br />
-                <p>
-                    <strong>List Price:</strong> <span class="grey">${{this.catalog_price}}</span>
-                    {{#if this.discount_price}}<strong>Sale Price:</strong> <span class="grey">${{this.discount_price}}</span>{{/if}}
-                    <strong>Quantity:</strong> <span class="grey">{{#ifMore this.quantity 0}}{{this.quantity}}{{else}}Unknown{{/ifMore}}</span>
-                    <strong>Size:</strong> <span class="grey">{{#if this.min_size}}{{this.min_size}}{{else}}Unknown{{/if}}</span>
-                </p>
-            </a>
-        </li>
-        {{/each}}
-    </script>
-
-    <script id="inventory-list" type="text/x-handlebars-template">
-        <div data-role="page">
-            <div data-role="header" data-position="fixed">
-                <div class="header_override">
-                    <h1 class="title_override">Inventory List</h1>
-                    <a href="javascript:inventory.refreshList()" id="refreshInventory" class="ui-btn ui-btn-right ui-icon-refresh  ui-btn-icon-notext ui-nodisc-icon" style = "background-color: transparent !important; border: 0px !important; padding: 10px 5px 2px 25px; margin: -4px -5px 0 0;"></a>
-                </div>
-
-                {{> nav-bar-partial}}
+        <div class="col-md-4 col-md-offset-4">
+            <div class="header">
+                <h1 class="">Task App</h1>
             </div>
 
-            <ul id="inventoryList" data-role="listview" data-filter="true" data-inset="true" class="ui-nodisc-icon ui-alt-icon" data-icon="carat-r">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Add items to list">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Add!</button>
+                </span>
+            </div><!-- /input-group -->
+                <!-- {{!> item-partial}} -->
 
-            </ul>
-        </div>
-    </script>
-
-    <script id="inventory-details" type="text/x-handlebars-template">
-        <div data-role="page">
-            <div data-role="header" data-position="fixed">
-                <div class="header_override">
-                    <h1 class="title_override">Details</h1>
-                </div>
-
-                {{> nav-bar-partial}}
-            </div>
-
-            <div class="ui-grid-a center">
-                {{> item-partial}}
-            </div>
-            <div data-role="footer" data-tap-toggle="false" data-position="fixed" class="details-footer-navbar">
-                <div data-role="navbar" class="footer_navbar ui-nodisc-icon" data-iconpos="top" data-mini="true">
-                    <ul>
-                        {{#unless android}}<li><a href="javascript:app.showInventoryListView()" data-icon="back" class="ui-alt-icon">Back</a></li>{{/unless}}
-                        <li><a href="javascript:capture.getPhoto(capture.CAMERA)" data-icon="takephoto">Take Photo</a></li>
-                        <li><a href="javascript:capture.getPhoto(capture.LIBRARY)" class="ui-alt-icon" data-icon="library">Image Library</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <script id="capture-page" type="text/x-handlebars-template">
-        <div data-role="page">
-            <div data-role="header" data-position="fixed">
-                <div class="header_override">
-                    <h1 class="title_override">Image Upload</h1>
-                </div>
-            </div>
-            <div id="smallimages_container">
-                <a href="javascript:capture.getPhoto(capture.LIBRARY)"><img class="image-add-button" src="img/buttons/image-add_2.png"/></a>
-            </div>
-            <div data-role="footer" data-tap-toggle="false" data-position="fixed" class="details-footer-navbar">
-                <div data-role="navbar" class="footer_navbar ui-nodisc-icon" data-iconpos="top" data-mini="true">
-                    <ul>
-                        {{#unless android}}<li><a href="javascript:inventory.showItemsDetailsView(inventory.current_item_id)" data-icon="back" class="ui-alt-icon">Back</a></li>{{/unless}}
-                        <li><a href="javascript:capture.getPhoto(capture.CAMERA)" data-icon="takephoto">Take Photo</a></li>
-                        <li><a href="javascript:capture.uploadImages()" class="ui-alt-icon" data-icon="action">Upload</a></li>
-                    </ul>
-                </div>
-            </div>
+            <!-- Footer -->
         </div>
     </script>
     <!-- /Handlebars templates -->
 
-    <title>Sign In</title>
+    <title>Kirk <3 JS</title>
 </head>
 <body>
 
-<!-- Start of first page -->
-<div data-role="page" id="loginPage">
-    <div data-role="content">
-        <div id="logospacer">
-            <img src="./img/logo.png" alt="Logo" width="266" height="114"/><!-- 533 x 228 -->
-        </div>
-        <form id="loginForm" method="post">
-            <div class="green100spacer"></div>
-            <input type="text" name="username" id="username" placeholder="Username" data-role="none"/> <!-- value="testappnursery_la" -->
 
-            <div class="green100spacer"></div>
-            <input type="password" name="password" id="password" placeholder="Password" width="200px" data-role="none"/> <!-- value="appattoapple"  -->
 
-            <div class="green100spacer"></div>
-
-        </form>
-        <div class="center-wrapper logintext">
-
-            <p><a href="javascript:window.open('https://plantbid.com/accounts/password/reset', '_system', 'location=yes')">Forgot Password</a>
-            <p class="greentext">────── OR ──────</p>
-
-            <p><a href="#noAccountPage">Don't have an account?</a></p>
+<!-- Main Page -->
+<!-- Bootstrap container and an initial row -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- This is the targeted div for a Single-Page App -->
+            <div id="landing-content">
+                <!-- Default display in case of Handlebars error -->
+                <h3> Oh my your handlebars didn't compile! </h3>
+            </div>
         </div>
     </div>
-    <!-- /content -->
 </div>
-<!-- /page -->
+<!-- END Main Page -->
 
-<!-- Start of noaccount page -->
-<div data-role="page" id="noAccountPage">
-    <div data-role="header" data-position="fixed">
-        <div id="page2header" class="header_override">
-            <h1 class="title_override">Register</h1>
-        </div>
-    </div>
-    <!-- /header -->
-    <div data-role="content">
-        <p>You need to create your account on the website at plantbid.com.</p>
+<!-- Init Handlebars -->
+<script>
+    $(function () {
+      // Grab the template script
+      var template = $("#landing-page").html();
+      // Compile the template
+      var compTemplate = Handlebars.compile(template);
 
-        <p><a href="#loginPage">Back to Login page</a></p>
-    </div>
-    <!-- /content -->
-</div>
-<!-- /page -->
+      // Define our data object
+      var context={
+        "task1": "Eat Carrots",
+        "task2": "Write JS"
+      };
 
+      // Pass our data to the template
+      var compiledHtml = compTemplate(context);
+
+      // Add the compiled html to the page
+      $('#landing-content').html(compiledHtml);
+    });
+</script>
 </body>
 </html>

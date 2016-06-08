@@ -1,21 +1,10 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+
+
+.header {
+    padding-bottom: 30px;
+}
+/**/
+
 * {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
@@ -40,9 +29,6 @@ body {
 
     text-transform: none;
 }
-.details-content {
-    font-size: 14px;
-}
 
 /* Portrait layout (default) */
 .app {
@@ -60,257 +46,30 @@ body {
 
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width: 400px) {
-    .app {
-        background-position: left center;
-        padding: 75px 0px 75px 170px; /* padding-top + padding-bottom + text area = image height */
-        margin: -90px 0px 0px -198px; /* offset vertical: half of image height */
-        /* offset horizontal: half of image width and text area width */
-    }
+
 }
 
-h1 {
-    font-size: 24px;
-    font-weight: normal;
-    margin: 0px;
-    overflow: visible;
-    padding: 0px;
-    text-align: center;
-}
 
-.event {
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    color: #FFFFFF;
-    font-size: 12px;
-    margin: 0px 30px;
-    padding: 2px 0px;
-}
+/* LANDING PAGE */
 
-.event.listening {
-    background-color: #333333;
-    display: block;
-}
-
-.event.received {
-    background-color: #4B946A;
-    display: none;
-}
-
-@keyframes fade {
-    from {
-        opacity: 1.0;
-    }
-    50% {
-        opacity: 0.4;
-    }
-    to {
-        opacity: 1.0;
-    }
-}
-
-@-webkit-keyframes fade {
-    from {
-        opacity: 1.0;
-    }
-    50% {
-        opacity: 0.4;
-    }
-    to {
-        opacity: 1.0;
-    }
-}
-
-.blink {
-    animation: fade 3000ms infinite;
-    -webkit-animation: fade 3000ms infinite;
-}
-
-/* LOGIN PAGE */
-#logospacer {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 15px;
-}
-
-#loginWrapper {
-    margin-top: 20px;
-    margin-bottom: 35px;
-}
-
-.logintext {
-    color: #bababa;
-    text-transform: none;
-}
-
-.logintext p a {
-    color: inherit;
-    text-decoration: none;
-    font-weight: normal;
-}
-
-.ui-page-theme-a a:visited {
-    color: inherit;
-    text-decoration: none;
-    /* 
-    font-weight: normal;
-    font-family: helvetica;  *//* font-weight was being ignored */
-}
-
-.greentext {
-    color: rgba(170, 190, 127, 1);
-}
-
-#loginForm input {
+/* Customize that Task Input */
+/*
+#id input {
     border: none;
     border-color: transparent;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-#loginForm input:active, #loginForm input:focus {
+#id input:active, #id input:focus {
     border: none;
     border-color: transparent;
 }
-
-.green100spacer {
-    height: 1px;
-    background: rgba(170, 190, 127, 1);
-
-    /* Hack to break this element out of container */
-    width: 300%;
-    margin-left: -100%;
-    margin-right: -100%;
-}
-
-/* DETAILS PAGE */
-.grey {
-    color: grey !important;
-}
-
-.greytext p span {
-    color: grey !important;
-}
-
-.details-footer-navbar {
-    background: transparent !important;
-    color: grey !important;
-}
-.details-footer-navbar .footer_navbar ul li a {
-    color: grey !important;
-}
-
-/* ICONS */
-
-/*
-.ui-icon-inventory:after {
-    background-image: url("../img/header_icons/inventory.29x29.svg");
-}
 */
-/* Fallback */
-.ui-icon-inventory:after {
-    background-image: url("../img/header_icons/inventory.grey.29x29.png");
-    background-size: 18px 18px;
-    /* top: .4em; */ /* Used for data-iconpos="top", removed for left update */
-}
-.ui-icon-inventory.ui-btn-active:after {
-    background-image: url("../img/header_icons/inventory.29x29.png");
-    background-size: 18px 18px;
-    /* top: .4em; */ /* Used for data-iconpos="top", removed for left update */
-}
 
-.ui-icon-requests:after {
-    background-image: url("../img/header_icons/requests.grey.29x29.png");
-    background-size: 19px 18px;
-    /* top: .4em; */
-}
-.ui-icon-requests.ui-btn-active:after {
-    background-image: url("../img/header_icons/requests.29x29.png");
-    background-size: 19px 18px;
-    /* top: .4em; */
-}
-
-.ui-icon-logout:after {
-    background-image: url("../img/header_icons/logout.grey.29x29.png");
-    background-size: 19px 18px;
-    /* top: .4em; */
-}
-.ui-icon-logout.ui-btn-active:after {
-    background-image: url("../img/header_icons/logout.29x29.png");
-    background-size: 19px 18px;
-    /* top: .4em; */
-}
-
-.ui-icon-contact:after {
-    background-image: url("../img/detailfooter_icons/contact.29x29.png");
-    background-size: 18px 18px;
-    top: .4em;
-}
-
-.ui-icon-library:after {
-    background-image: url("../img/detailfooter_icons/image-library.29x29.png");
-    background-size: 18px 18px;
-    top: .4em;
-}
-
-.ui-icon-takephoto:after {
-    background-image: url("../img/detailfooter_icons/take-photo.29x29.png");
-    background-size: 18px 18px;
-    top: .4em;
-}
-.ui-btn-icon-top.ui-icon-requests:after {
-  -webkit-border-radius: none;
-  border-radius: none;
-}
-.ui-btn-icon-top.ui-icon-logout:after {
-  -webkit-border-radius: none;
-  border-radius: none;
-}
-.ui-btn-icon-top.ui-icon-inventory:after {
-  -webkit-border-radius: none;
-  border-radius: none;
-}
-
-
-/* Capture Pages */
-.image-small, .image-add-button {
-    width: 70px;
-    height: 70px;
-    margin-left: 15px;
-    margin-top: 15px;
-}
-
-.selected {
-    background-color: green;
-    opacity: 80;
-}
-
-/* INVENTORY LIST */
-#inventoryList li a {
-    font-size: 1.2em;
-    word-wrap: break-word;
-}
-
-#inventoryList li a p {
-    margin-top: 3px;
-    font-size: .7em;
-    word-wrap: break-word;
-    overflow: visible;
-    text-overflow: none;
-}
-
-/* INVENTORY DETAIL PAGE */
-
-#inventoryDetailPage div div p, #requestDetailPage div div p {
-    margin-top: 1px;
-    margin-bottom: 1px;
-}
-
-/* We hide login screen by default */
-#loginPage {
-    display: none;
-}
 
 /* Bubble counter */
+/* Maybe add a Task counter
 .ui-badge-container {
     position: relative;
 }
@@ -319,7 +78,7 @@ h1 {
     top: 25px;
     padding: 0px 5px;
     font-weight: normal;
-    
+
     display: none;
     background: #BA070F;
     color: #fff;
@@ -327,4 +86,4 @@ h1 {
     z-index: 999;
     border-radius: .8em;
     border: 0px solid #fff;
-}
+}*/

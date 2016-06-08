@@ -16,14 +16,14 @@ var inventory = {
                     // This is only called when the inventory API update is successful
                     // Or when a $%^&*& android somehow clears the dom on reload while offline
                     inventory.refreshInventoryListFromCache();
-                    
+
                 }).fail(function () {
                     PhoneGapProxy.navigator.notification.vibrate();
                     PhoneGapProxy.navigator.notification.alert('Could not fetch inventory');
                     if (core.DEBUG) { console.error('Could not fetch inventory'); }
                 }).always(function () {
                     $.mobile.loading('hide');
-                    refreshInventoryButton.removeAttr('disabled');  
+                    refreshInventoryButton.removeAttr('disabled');
                 });
 
             $('body > div[id^="inventoryDetailPage"]').remove();  // Remove all rendered pages
@@ -53,17 +53,7 @@ var inventory = {
 
         window.plugins.toast.showShortCenter('Refreshed Inventory List');
     },
-    fixDiscountPrice: function (items) {
-        var result = [];
-        $.each(items, function (index, item) {
-            if (item.discount_price >= item.catalog_price) {
-                item.discount_price = 0.0;
-            }
-            result.push(item);
-        });
 
-        return result;
-    },
     renderInventoryListPage: function () {
         if (core.DEBUG) { console.log('renderInventoryListPage()'); }
         var id = 'inventoryListPage';
@@ -123,7 +113,7 @@ var inventory = {
             $.ajax({
                 url: "http://www.google.com",
                 type: "GET",
-                success:function(data){                    
+                success:function(data){
                     if (core.DEBUG) { console.log('Downloading photos'); }
                     $.mobile.loading('show');
                     api.getInventoryDetails(itemId)
@@ -139,7 +129,7 @@ var inventory = {
                     if (core.DEBUG) { console.log("no internet connection"); }
                     inventory.renderItemDetails(itemId);
                 }
-            });    
+            });
 
         } else {
             if (core.DEBUG) { console.log('Showing photos from cache'); }
@@ -155,7 +145,7 @@ var inventory = {
                 item = items[j];
             }
         }
-        
+
         if (!item) {
             PhoneGapProxy.navigator.notification.vibrate();
             if (core.DEBUG) { console.error('Could not find item ' + itemId); }
