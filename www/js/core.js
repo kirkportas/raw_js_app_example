@@ -1,69 +1,69 @@
-if (!String.prototype.startsWith) {
-    Object.defineProperty(String.prototype, 'startsWith', {
-        enumerable: false,
-        configurable: false,
-        writable: false,
-        value: function (searchString, position) {
-            position = position || 0;
-            return this.indexOf(searchString, position) === position;
-        }
-    });
-}
+DEBUG=true; // Global Debug Var
+var GFT_APP = window.GFT_APP || {};
+var GFT_APP = {
+    // Extendable router of page names & mapped Template locations
+    // Useful because the Handlebars/grunt config will change over time and this can be updated to match
+    pageRouter: { 'landing': 'www/templates/landing.hbs' },
 
-Handlebars.registerHelper('ifMore', function(v1, v2, options) {
-    if(v1 > v2) {
-        return options.fn(this);
+    init: function() {
+        if (DEBUG) { console.log("GFT_APP: init()"); }
+
+        // Define landing page context for template
+        var context={
+            placeholder: "Add items to list",
+            tasks: GFT_APP.tasks.getTasks() // ["Write Code", "Push Code"]
+        };
+
+        GFT_APP.renderPage("landing", context, "#landing-content")
+
+        //## Init could do it's own rendering.
+        // var landingTemplate = JST['www/templates/landing.hbs'](context);
+        // $('#landing-content').html(landingTemplate);
+    },
+
+    renderPage: function (templateName, context, selector) {
+        if (DEBUG) { console.log('rendering page: templateName: ' + templateName + ', context: ' +context+ ', selector: '+ selector); }
+
+        // Get template from compiled JST object, pass in received context (just from init() for now)
+        templateHtml = JST[ GFT_APP.pageRouter[templateName] ]( context );
+
+        // Add compiled HTML to page, in defined selector.
+        $(selector).html(templateHtml);
+
+        // Update <html> dom object to track of 'active'page.
+        $('html').attr('data-activepage', templateName);
     }
-    return options.inverse(this);
-});
-
-var core = {
-    DEBUG: false,
-    pageHistoryCount: 0,
-
-    // confirmExit: function () {
-    //     navigator.notification.confirm("Are you sure you want to exit?", function(result){
-    //         if (result == 2) {
-    //             core.exitApp();
-    //         }
-    //     }, 'Exit', 'No,Exit');
-    // },
-
-    isAndroid: function () {
-        return window.device && window.device.platform == 'Android';
-    },
-    logObjProperties: function (obj) {
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                if (core.DEBUG) { console.info(key + ': ' + obj[key]); }
-            }
-        }
-    },
-    renderPage: function (templateId, context, selector, partials) {
-        //if (core.DEBUG) { console.log('rendering page: templateId: ' + templateId + ', context: ' +context+ ', selector: '+ selector+', partials: ' + partials); }
-        var source = $(templateId).html();
-        var template = Handlebars.compile(source);
-
-        if (partials && partials.length) {
-            for (var i = 0; i < partials.length; i++) {
-                Handlebars.registerPartial(partials[i], $('#' + partials[i]).html());
-            }
-        }
-        var html = $(template(context));
-        html.attr('id', selector);  // Set the unique ID
-
-        $('body > #' + selector).remove();  // This is how we avoid dupes
-        $.mobile.pageContainer.append(html);
-        $("div[data-role='page']").not('[id]').remove(); // Remove dupe request page with no id
-        //if (core.DEBUG) { console.log('requesthtml: ' + html); }
-        $.mobile.loading('hide');
-        $(':mobile-pagecontainer').pagecontainer('change', html);
-
-        if (app.hasConnection()) {
-            capture.uploadQueue();
-        }
-    },
-    alreadyRendered: function (id) {
-        return $('body > div#' + id).length;
-    }
+    //,
+    // alreadyRendered: function (templateName) {
+    //     return $('html .. check for data-activepage).length;
+    // }
 };
+
+//## Some JS utils I copy into all projects
+// var UTILS = {
+//     logObjProperties: function (obj) {
+//         for (var key in obj) {
+//             if (obj.hasOwnProperty(key)) {
+//                 if (GFT_APP.DEBUG) { console.info(key + ': ' + obj[key]); }
+//             }
+//         }
+//     }
+// }
+// if (!String.prototype.startsWith) {
+//     Object.defineProperty(String.prototype, 'startsWith', {
+//         enumerable: false,
+//         configurable: false,
+//         writable: false,
+//         value: function (searchString, position) {
+//             position = position || 0;
+//             return this.indexOf(searchString, position) === position;
+//         }
+//     });
+// }
+
+// Handlebars.registerHelper('ifMore', function(v1, v2, options) {
+//     if(v1 > v2) {
+//         return options.fn(this);
+//     }
+//     return options.inverse(this);
+// });

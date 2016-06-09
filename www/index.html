@@ -20,12 +20,8 @@
 
     <!-- Home-rolled modules -->
     <script type="text/javascript" src="js/core.js"></script>
+    <script type="text/javascript" src="js/tasks.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
-    <script type="text/javascript" src="js/auth.js"></script>
-    <script type="text/javascript" src="js/capture.js"></script>
-    <script type="text/javascript" src="js/inventory.js"></script>
-    <script type="text/javascript" src="js/requests.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
 
     <!-- Handlebars templates -->
 
@@ -58,34 +54,7 @@
         });
 
         $(function () {
-            //## Register partials
-            // Handlebars.registerPartial('add-task-input');
-            // Handlebars.registerPartial('add-task-input', '{{add-task-input}}');
-
-            var landingTemplate = JST['www/templates/landing.hbs']({
-                placeholder: "Add items to list",
-                example_tasks: ["Write Code", "Push Code"]
-            });
-
-            //## Grab the template script
-            // var template = $("#landing-page").html();
-            //## Compile the template
-            // var compTemplate = Handlebars.compile(template);
-
-            // Define vars for template
-            var context={
-                "placeholder": "Add items to list",
-                "example_tasks": ["Write Code", "Push Code"]
-            };
-
-            // Pass our data to the template
-            // var compiledHtml = postTemplate(context);
-            // var compiledHtml = compTemplate(context);
-
-            // Add the compiled html to the page
-            $('#landing-content').html(landingTemplate);
-
-            // $('#landing-content').html(compiledHtml);
+            GFT_APP.init();
         });
     </script>
 

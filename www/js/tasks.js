@@ -1,40 +1,34 @@
-var inventory = {
-    current_item_id: null,
-    pagination_item_counter: 0,
-    pagination_limit: 5,
-    refreshList: function () {
-        if (core.DEBUG) { console.log('RefreshList() for Inventory'); }
-        if (app.hasConnection()) {
-            $.mobile.loading('show');
+var GFT_APP = window.GFT_APP || {};
+GFT_APP.tasks = {
+    task_items: {}, // This will store task items
 
-            var refreshInventoryButton = $('#refreshInventory');
-            refreshInventoryButton.attr('disabled', 'disabled');
-            window.plugins.toast.showShortCenter('Refreshing List & Upload Queue');
-
-            api.getInventoryList()
-                .done(function () {
-                    // This is only called when the inventory API update is successful
-                    // Or when a $%^&*& android somehow clears the dom on reload while offline
-                    inventory.refreshInventoryListFromCache();
-
-                }).fail(function () {
-                    PhoneGapProxy.navigator.notification.vibrate();
-                    PhoneGapProxy.navigator.notification.alert('Could not fetch inventory');
-                    if (core.DEBUG) { console.error('Could not fetch inventory'); }
-                }).always(function () {
-                    $.mobile.loading('hide');
-                    refreshInventoryButton.removeAttr('disabled');
-                });
-
-            $('body > div[id^="inventoryDetailPage"]').remove();  // Remove all rendered pages
-            capture.uploadQueue();
+    addTask: function(task_obj) {
+        if (task_obj !== null) { // e.g. Validate object
+            this.task_items.append( task_obj );
         } else {
-            if (core.DEBUG) { console.log('offline'); }
-            window.plugins.toast.showShortCenter('Currently offline');
+            // Notify: invalid Task
         }
     },
-    refreshInventoryListFromCache: function () {
-        var items = JSON.parse(localStorage.inventory_items);
+    deleteTask: function(task_obj) {
+        if (task_obj !== null) { // e.g. Validate object
+            this.task_items.remove( task_obj );
+        } else {
+            // Notify: invalid Task
+        }
+    },
+    getTasks: function() {
+        // Call this on page load
+        // 1) Check localstorage / api & set 'task_items'
+        // 2) Refresh list
+
+        return [{'id': 1, 'title': "Write Code"},
+                {'id': 2, 'title': "Push Code" },
+                {'id': 3, 'title': "Install Sublime3" }]
+    },
+    refreshTasks: function () {
+        if (GFT_APP.DEBUG) { console.log('tasks: refreshTasksFromCache()'); }
+        var tasks = GFT_APP.api.loadTasks;
+
 
         var source = $('#inventory-items').html();
         var template = Handlebars.compile(source);
@@ -43,7 +37,6 @@ var inventory = {
         context.items = inventory.fixDiscountPrice(items);
 
         var html = $(template(context));
-        if (core.DEBUG) { console.log('html: ' + html); }
 
         $('#inventoryList').empty(); //Empty list
         $('#inventoryList')
@@ -55,11 +48,11 @@ var inventory = {
     },
 
     renderInventoryListPage: function () {
-        if (core.DEBUG) { console.log('renderInventoryListPage()'); }
+        if (GFT_APP.DEBUG) { console.log('renderInventoryListPage()'); }
         var id = 'inventoryListPage';
 
         if (core.alreadyRendered(id)) {
-            if (core.DEBUG) { console.info('No need to render Inventory List again'); }
+            if (GFT_APP.DEBUG) { console.info('No need to render Inventory List again'); }
             core.showPage(id);
             core.setActiveMenuItem('inventory');
             return;
@@ -73,7 +66,7 @@ var inventory = {
         //try {
         //    lastUpdated = new Date(localStorage.inventory_date_updated);
         //} catch (e) {
-        //    if (core.DEBUG) { console.error('Not able to parse date: ' + e); }
+        //    if (GFT_APP.DEBUG) { console.error('Not able to parse date: ' + e); }
         //}
 
         //dateStr = (lastUpdated.getMonth() + 1) + '/' + lastUpdated.getDate() + '/' + lastUpdated.getFullYear();
@@ -101,7 +94,7 @@ var inventory = {
         var id = 'inventoryDetailPage-' + itemId;
 
         if (core.alreadyRendered(id)) {
-            if (core.DEBUG) { console.info('No need to render Inventory Details #' + itemId + ' again'); }
+            if (GFT_APP.DEBUG) { console.info('No need to render Inventory Details #' + itemId + ' again'); }
             core.showPage(id);
             core.setActiveMenuItem('inventory');
             inventory.current_item_id = itemId;
@@ -114,7 +107,7 @@ var inventory = {
                 url: "http://www.google.com",
                 type: "GET",
                 success:function(data){
-                    if (core.DEBUG) { console.log('Downloading photos'); }
+                    if (GFT_APP.DEBUG) { console.log('Downloading photos'); }
                     $.mobile.loading('show');
                     api.getInventoryDetails(itemId)
                         .done(function () {
@@ -122,52 +115,34 @@ var inventory = {
                         }).fail(function () {
                             PhoneGapProxy.navigator.notification.vibrate();
                             PhoneGapProxy.navigator.notification.alert('Could not fetch item.');
-                            if (core.DEBUG) { console.error('Could not fetch item.'); }
+                            if (GFT_APP.DEBUG) { console.error('Could not fetch item.'); }
                         });
                 },error: function(xhr, ajaxOptions, thrownError) {
                     //alert("error : " + xhr.statusText + "(" + thrownError + ")");
-                    if (core.DEBUG) { console.log("no internet connection"); }
+                    if (GFT_APP.DEBUG) { console.log("no internet connection"); }
                     inventory.renderItemDetails(itemId);
                 }
             });
 
         } else {
-            if (core.DEBUG) { console.log('Showing photos from cache'); }
+            if (GFT_APP.DEBUG) { console.log('Showing photos from cache'); }
             inventory.renderItemDetails(itemId);
         }
     },
-    renderItemDetails: function (itemId) {
-        if (core.DEBUG) { console.log('Called renderItemDetails()'); }
-        var item = null;
-        var items = JSON.parse(localStorage.inventory_items);
-        for (var j = 0; j < items.length; j++) {
-            if (items[j].id == itemId) {
-                item = items[j];
-            }
+
+
+
+    onDeleteConfirm: function (buttonIndex) {
+        if (buttonIndex === 1) {
+            auth.handleLogout();
         }
-
-        if (!item) {
-            PhoneGapProxy.navigator.notification.vibrate();
-            if (core.DEBUG) { console.error('Could not find item ' + itemId); }
-            //inventory.refreshList();  //was getlist()
-            PhoneGapProxy.navigator.notification.alert('Item is not cached, please refresh the inventory list.');
-            return;
-        }
-
-        inventory.current_item_id = item.id;
-
-        // If images exist in cache, then pass them to the template.
-        if ( ('photos.' + itemId) in localStorage ) {
-            item.images = core.patchImagesWithLettersForGrid(JSON.parse(localStorage['photos.' + itemId]));
-        }
-//        core.logObjProperties(item);  // TODO: Debug mode only, remove in production
-
-        var context = item;
-        context.android = core.isAndroid();
-
-        var partials = ['nav-bar-partial', 'item-partial'];
-        core.renderPage('#inventory-details', context, 'inventoryDetailPage-' + itemId, partials);
-        core.setActiveMenuItem('inventory');
-        requests.getCounter();
+    },
+    showLogoutConfirmationDialog: function () {
+        PhoneGapProxy.navigator.notification.confirm(
+            'Are you sure you would like to log out?',
+            GFT_APP.tasks.onDeleteConfirm,
+            null,
+            null
+        );
     }
 };

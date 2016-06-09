@@ -22,7 +22,7 @@ var app = {
         //block events on navbar partial for inv & request page
         $("a[data-icon='inventory']").click( function (event) {
             var activePageId = $('.ui-page-active').attr('id');
-            if (activePageId == 'inventoryListPage') 
+            if (activePageId == 'inventoryListPage')
                 { event.preventDefault(); }
         });
     },
@@ -31,7 +31,7 @@ var app = {
         requests.getList();
         $("a[data-icon='requests']").click( function (event) {
             var activePageId = $('.ui-page-active').attr('id');
-            if (activePageId == 'requestListPage') 
+            if (activePageId == 'requestListPage')
                 { event.preventDefault(); }
         });
     },
@@ -56,10 +56,10 @@ var app = {
 $(document).on('deviceready', function () {
     app.init();
     navigator.splashscreen.hide();
-    
+
     $(function () {
         FastClick.attach(document.body);
-        if (core.DEBUG) { console.info('fastclick attached to body'); }
+        if (GFT_APP.DEBUG) { console.info('fastclick attached to body'); }
     });
 
     // Handling for hardware back button on Android
@@ -71,7 +71,7 @@ $(document).on('deviceready', function () {
                 core.goingBack = false;
             } else {
                 core.pageHistoryCount++;
-                if (core.DEBUG) { console.log("Showing page #" + core.pageHistoryCount); }
+                if (GFT_APP.DEBUG) { console.log("Showing page #" + core.pageHistoryCount); }
             }
         });
     }
@@ -92,18 +92,3 @@ $(document).on('deviceready', function () {
 
 });
 //app.init();   //Uncomment to run app in Ripple emulator.
-
-function toggleCon(e) {
-	if (core.DEBUG) { console.log("Called",e.type); }
-    if(localStorage.queueList) {
-        	queueList = $.parseJSON(localStorage.queueList);
-            //alert(queueList.length);
-     }
-	if(e.type == "offline") {
-        // Later we should put in Toast notifications
-		//navigator.notification.alert("Sorry, you are offline.", function() {}, "Offline!");
-	} else {
-		//navigator.notification.alert("Woot, you are back online.", function() {}, "Online!");
-        capture.uploadQueue();
-	}
-}

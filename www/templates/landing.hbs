@@ -10,16 +10,16 @@
         </span>
     </div> --}}
     <div id="task-list">
-        {{#if example_tasks}}
+        {{#if tasks}}
         <ul>
-            {{#each example_tasks}}
+            {{#each tasks}}
             <li>
-                {{this}}
+                {{this.title}}
                 <button class="btn btn-default"> Delete </button>
             </li>
             {{/each}}
         </ul>
-        <span id="task_count"> {{example_tasks.length}} items in list </span>
+        <span id="task_count"> {{tasks.length}} items in list </span>
         {{/if}}
     </div>
     <!-- {{!> item-partial}} -->
