@@ -20,8 +20,9 @@
 
     <!-- Home-rolled modules -->
     <script type="text/javascript" src="js/core.js"></script>
-    <script type="text/javascript" src="js/tasks.js"></script>
+    <script type="text/javascript" src="js/models/task.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/tasks.js"></script>
 
     <!-- Handlebars templates -->
 
@@ -48,14 +49,10 @@
 
     <!-- Init Handlebars -->
     <script>
-        // instead of {{> partialName}} use {{partial "templateName"}}
-        Handlebars.registerHelper('partial', function(templateName,context){
-            return new Handlebars.SafeString(Handlebars.templates[templateName](this));
-        });
-
-        $(function () {
-            GFT_APP.init();
-        });
+        // $(document).on("pageload",function(){
+        //   GFT_APP.init();
+        // });
+        $(function () { GFT_APP.init(); });
     </script>
 
     <!-- Extend Storage with some localStorage get/set helpers -->

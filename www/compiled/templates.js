@@ -3,9 +3,9 @@ this["JST"] = this["JST"] || {};
 Handlebars.registerPartial("add-task-input", Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper;
 
-  return "<div class=\"input-group\">\r\n    <input type=\"text\" class=\"form-control\" placeholder=\""
+  return "<div class=\"input-group\">\r\n    <input id=\"new-task-title\" type=\"text\" class=\"form-control\" placeholder=\""
     + ((stack1 = ((helper = (helper = helpers.placeholder || (depth0 != null ? depth0.placeholder : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"placeholder","hash":{},"data":data}) : helper))) != null ? stack1 : "")
-    + "\">\r\n    <span class=\"input-group-btn\">\r\n        <button class=\"btn btn-default\" type=\"button\">Add!</button>\r\n    </span>\r\n</div>\r\n";
+    + "\">\r\n    <span class=\"input-group-btn\">\r\n        <button class=\"btn btn-default\" type=\"button\" onClick=\"GFT_APP.tasks.createTask()\">Add!</button>\r\n    </span>\r\n</div>\r\n";
 },"useData":true}));
 
 this["JST"]["www/templates/landing.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {

@@ -14,7 +14,7 @@ var GFT_APP = {
             tasks: GFT_APP.tasks.getTasks() // ["Write Code", "Push Code"]
         };
 
-        GFT_APP.renderPage("landing", context, "#landing-content")
+        this.renderPage("landing", context, "#landing-content")
 
         //## Init could do it's own rendering.
         // var landingTemplate = JST['www/templates/landing.hbs'](context);
@@ -66,4 +66,8 @@ var GFT_APP = {
 //         return options.fn(this);
 //     }
 //     return options.inverse(this);
+// });
+
+// Handlebars.registerHelper('partial', function(templateName,context){
+//     return new Handlebars.SafeString(Handlebars.templates[templateName](this));
 // });
