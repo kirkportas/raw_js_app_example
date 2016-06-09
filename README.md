@@ -1,8 +1,21 @@
-# Requirements
+### Requirements
+
+npm install -g grunt-cli
+
+# Install NPM packages
+npm install
+
+# Compile HBS templates
+grunt handlebars
 
 
-# Run an app
-    $ phonegap run ios
-    $ phonegap run android
+
+## Running the app
+Open /www/index.html
 
 
+
+## Modifying the app
+Make changes
+run 'grunt handlebars'
+Reload index.html

@@ -1,6 +1,12 @@
 <div class="input-group">
-    <input id="new-task-title" type="text" class="form-control" placeholder="{{{placeholder}}}">
+    <input id="new-task-title"
+           onkeyup="GFT_APP.tasks.bindNewTaskTitle(this.value)"
+           type="text"
+           class="form-control"
+           placeholder="{{{placeholder}}}">
     <span class="input-group-btn">
-        <button class="btn btn-default" type="button" onClick="GFT_APP.tasks.createTask()">Add!</button>
+        <button class="btn btn-default"
+                type="button"
+                onClick="GFT_APP.tasks.createTask()">Add!</button>
     </span>
 </div>

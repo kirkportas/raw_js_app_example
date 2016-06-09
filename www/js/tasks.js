@@ -3,26 +3,35 @@ var GFT_APP = window.GFT_APP || {};
 GFT_APP.tasks = {
     // "include" required modules and controllers & give a convenient local name
     api: GFT_APP.api,    // *This is a load-order dependency
-
+    core: GFT_APP,
     // Set vars
-    task_items: {},      // This will store task items
+    task_items: [],      // This will store task items
+    initLoad: true,
+    // UI bound vars
+    newTaskTitle: null,
 
-    createTask: function(task_name) {
-        if (DEBUG) { console.log('createTask(): task_name: ' + task_name); }
-
-        if (task_name.length != 0) {
+    bindNewTaskTitle: function(taskTitle) {
+        if (DEBUG) { console.log('bindNewTaskTitle(): ' + taskTitle); }
+        this.newTaskTitle = taskTitle;
+    },
+    createTask: function() {
+        var title = this.newTaskTitle;
+        // var newTaskTitle = $('#new-task-title').val();
+        if (DEBUG) { console.log('createTask(): title: ' + title); }
+        if (title != null && title.length > 0) {
             // imagine a binding to the input element
-            var newTaskTitle = $('#new-task-title').value;
-            var newtask = new Task({'title': taskTitle});
-
-            this.task_items.append( newtask );
+            var newtask = new Task({'title': title});
+            this.task_items.push( newtask );
 
             this.refreshTaskList();
-            // return task_items;
         } else {
             alert('You must enter a Task title.');
         }
+
+        this.newTaskTitle = null;     // Reset local bound var
+        this.api.saveTasks(this.task_items);  // Update LocalStorage/API
     },
+
     deleteTask: function(task_id) {
         if (task_id !== null) { // e.g. Validate object
             // this.task_items.remove( Task.where('id': task_id) );
@@ -30,17 +39,24 @@ GFT_APP.tasks = {
             // Notify: invalid Task
         }
     },
+
     getTasks: function() {
-        // Call this on page load
-        // 1) Check localstorage / api & set 'task_items'
-        // 2) Refresh list
-        var tasks = this.api.loadTasks();
-        return tasks;
+        if (DEBUG) { console.log('tasks.getTasks()'); }
+        // Call API for seed tasks on initial Load. Api vs. Local load logic could go here
+        if (this.initLoad === true && this.task_items.length === 0) {
+            this.initLoad = false;
+            this.task_items = this.api.loadTasks();
+        }
+        return this.task_items;
     },
+
     refreshTaskList: function() {
         // This is an incomplete implementation. We'd want to refresh just the partial & not the whole page.
-        var context = GFT_APP.defaultContext;
-        this.renderPage("landing", context, "#landing-content")
+        var context = {
+            placeholder: "Add items to list",
+            tasks: this.task_items // ["Write Code", "Push Code"]
+        };
+        this.core.renderPage("landing", context, "#landing-content");
     }
 
     // onDeleteConfirm: function (buttonIndex) {

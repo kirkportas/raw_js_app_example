@@ -1,4 +1,9 @@
 
+/* Use SCSS for there */
+.btn-delete {
+    float: right;
+    padding: 3px 12px !important;
+}
 
 .header {
     padding-bottom: 30px;
@@ -7,9 +12,9 @@
 #task-list {
     margin-top: 15px;
 }
-
 #task-list li {
     margin-top: 5px;
+    min-height: 30px;
 }
 /**/
 
