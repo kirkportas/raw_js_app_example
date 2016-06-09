@@ -1,5 +1,5 @@
 {
-  "name": "gft-jsirk",
+  "name": "gft-js-kirk",
   "version": "1.0.0",
   "description": "Some javascript",
   "main": "index.js",
@@ -11,12 +11,13 @@
     "url": "git://github.com/kirkportas/gft_js.git"
   },
   "author": "Kirk Portas",
-  "license": "N/A",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/kirkportas/gft_js/issues"
   },
   "homepage": "https://github.com/kirkportas/gft_js",
-  "dependencies": {
-    "cordova": "^3.4.0-0.1.0"
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^1.0.1"
   }
 }

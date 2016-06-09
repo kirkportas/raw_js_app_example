@@ -1,6 +1,9 @@
 # Global
 .idea
 
+# Node packages
+node_modules/
+
 # Local configuration file (sdk path, etc)
 local.properties
 
