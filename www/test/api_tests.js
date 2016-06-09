@@ -7,7 +7,11 @@ var example_tasks = [ new Task({'title': "Write Code"}),
                       new Task({'title': "Push Code" }),
                       new Task({'title': "Install Sublime3"}) ]
 
-QUnit.test( "saveTasks() saves to localStorage", function( assert ) {
+QUnit.test( "API: module exists", function( assert ) {
+  assert.ok( GFT_APP.api != null, "Passed!" );
+});
+
+QUnit.test( "API: saveTasks() saves to localStorage", function( assert ) {
     assert.expect(2);
 
     GFT_APP.api.saveTasks( example_tasks );
@@ -17,7 +21,7 @@ QUnit.test( "saveTasks() saves to localStorage", function( assert ) {
     assert.equal( saved_tasks[1]['title'], saved_tasks[1]['title'], "Saved values correct!" );
 });
 
-QUnit.test( "loadTasks() loads from localStorage", function( assert ) {
+QUnit.test( "API: loadTasks() loads from localStorage", function( assert ) {
     assert.expect(2);
 
     localStorage.task_items = JSON.stringify( example_tasks );

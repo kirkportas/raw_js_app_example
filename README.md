@@ -19,3 +19,6 @@ Open /www/index.html
 Make changes
 run 'grunt handlebars'
 Reload index.html
+
+## Tests
+Load /www/tests/qunit.html
