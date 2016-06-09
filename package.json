@@ -19,6 +19,7 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "^1.0.1",
-    "grunt-contrib-handlebars": "^1.0.0"
+    "grunt-contrib-handlebars": "^1.0.0",
+    "qunitjs": "^2.0.0-rc1"
   }
 }
