@@ -11,21 +11,25 @@ Handlebars.registerPartial("add-task-input", Handlebars.template({"compiler":[7,
 this["JST"]["www/templates/landing.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "        <ul>\r\n"
+  return "    <ul>\r\n"
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.tasks : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "        </ul>\r\n        <span id=\"task_count\"> "
+    + "    </ul>\r\n    <span id=\"task_count\"> "
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.tasks : depth0)) != null ? stack1.length : stack1), depth0))
     + " items in list </span>\r\n";
 },"2":function(container,depth0,helpers,partials,data) {
-    return "            <li \"task-list-item\">\r\n                "
-    + container.escapeExpression(container.lambda((depth0 != null ? depth0.title : depth0), depth0))
-    + "\r\n                <button class=\"btn btn-default btn-delete\"> Delete </button>\r\n            </li>\r\n";
+    var alias1=container.lambda, alias2=container.escapeExpression;
+
+  return "        <li \"task-list-item\">\r\n            "
+    + alias2(alias1((depth0 != null ? depth0.title : depth0), depth0))
+    + "\r\n            <button class=\"btn btn-default btn-delete\"\r\n                    onclick=\"GFT_APP.tasks.deleteTask("
+    + alias2(alias1((depth0 != null ? depth0.id : depth0), depth0))
+    + ")\"> Delete </button>\r\n        </li>\r\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div class=\"col-md-4 col-md-offset-4\">\r\n    <div class=\"header\">\r\n        <h1 class=\"\">GFT Task App</h1>\r\n    </div>\r\n"
-    + ((stack1 = container.invokePartial(partials["add-task-input"],depth0,{"name":"add-task-input","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "\r\n    <div id=\"task-list\">\r\n"
+  return "\r\n<div class=\"header\">\r\n    <h1 class=\"\">GFT Task App</h1>\r\n</div>\r\n"
+    + ((stack1 = container.invokePartial(partials["add-task-input"],depth0,{"name":"add-task-input","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "\r\n<div id=\"task-list\">\r\n"
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.tasks : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "    </div>\r\n    <!--  -->\r\n\r\n    <!-- Footer -->\r\n</div>\r\n";
+    + "</div>\r\n";
 },"usePartial":true,"useData":true});

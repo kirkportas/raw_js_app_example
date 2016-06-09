@@ -1,4 +1,5 @@
 DEBUG=true; // Global Debug Var
+
 var GFT_APP = window.GFT_APP || {};
 var GFT_APP = {
     // Extendable router of page names & mapped Template locations
@@ -11,14 +12,10 @@ var GFT_APP = {
         // Define landing page context for template
         var context={
             placeholder: "Add items to list",
-            tasks: GFT_APP.tasks.getTasks() // ["Write Code", "Push Code"]
+            tasks: GFT_APP.tasks.getTasks() // Checks goes thru Tasks=>Api if first load
         };
 
         this.renderPage("landing", context, "#landing-content")
-
-        //## Init could do it's own rendering.
-        // var landingTemplate = JST['www/templates/landing.hbs'](context);
-        // $('#landing-content').html(landingTemplate);
     },
 
     renderPage: function (templateName, context, selector) {
@@ -30,16 +27,12 @@ var GFT_APP = {
         // Add compiled HTML to page, in defined selector.
         $(selector).html(templateHtml);
 
-        // Update <html> dom object to track of 'active'page.
+        // Update <html> dom object to track 'active' page.
         $('html').attr('data-activepage', templateName);
     }
-    //,
-    // alreadyRendered: function (templateName) {
-    //     return $('html .. check for data-activepage).length;
-    // }
 };
 
-//## Some JS utils I copy into all projects
+//## Some useful JS utils
 // var UTILS = {
 //     logObjProperties: function (obj) {
 //         for (var key in obj) {
@@ -49,6 +42,7 @@ var GFT_APP = {
 //         }
 //     }
 // }
+
 // if (!String.prototype.startsWith) {
 //     Object.defineProperty(String.prototype, 'startsWith', {
 //         enumerable: false,
@@ -68,6 +62,13 @@ var GFT_APP = {
 //     return options.inverse(this);
 // });
 
-// Handlebars.registerHelper('partial', function(templateName,context){
-//     return new Handlebars.SafeString(Handlebars.templates[templateName](this));
-// });
+
+//## Extend Storage with some localStorage get/set helpers
+// Storage.prototype.setObject = function(key, value) {
+//     this.setItem(key, JSON.stringify(value));
+// }
+
+// Storage.prototype.getObject = function(key) {
+//     var value = this.getItem(key);
+//     return value && JSON.parse(value);
+// }

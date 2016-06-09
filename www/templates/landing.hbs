@@ -1,24 +1,21 @@
-<div class="col-md-4 col-md-offset-4">
-    <div class="header">
-        <h1 class="">GFT Task App</h1>
-    </div>
-    {{> add-task-input}}
 
-    {{!-- This would be broken into a template+partial --}}
-    <div id="task-list">
-        {{#if tasks}}
-        <ul>
-            {{#each tasks}}
-            <li "task-list-item">
-                {{this.title}}
-                <button class="btn btn-default btn-delete"> Delete </button>
-            </li>
-            {{/each}}
-        </ul>
-        <span id="task_count"> {{tasks.length}} items in list </span>
-        {{/if}}
-    </div>
-    <!-- {{!> item-partial}} -->
+<div class="header">
+    <h1 class="">GFT Task App</h1>
+</div>
+{{> add-task-input}}
 
-    <!-- Footer -->
+{{!-- This would be broken into a template+partial --}}
+<div id="task-list">
+    {{#if tasks}}
+    <ul>
+        {{#each tasks}}
+        <li "task-list-item">
+            {{this.title}}
+            <button class="btn btn-default btn-delete"
+                    onclick="GFT_APP.tasks.deleteTask({{this.id}})"> Delete </button>
+        </li>
+        {{/each}}
+    </ul>
+    <span id="task_count"> {{tasks.length}} items in list </span>
+    {{/if}}
 </div>

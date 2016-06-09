@@ -19,18 +19,17 @@ GFT_APP.api = {
         }
         return tasks;
     },
+
     // This is a simple overwrite, not an append.
     saveTasks: function(task_items) {
         if (DEBUG) { console.log('api.saveTasks()'); }
 
         if(this.use_localstorage == true) {
-            // if (localStorage.task_items) {
             localStorage.task_items = JSON.stringify(task_items);  // Cache the results
         } else {
             // Save to API or other datastore
             console.error('No API Available. For demo, GFT_APP.api.use_localstorage must be true');
         }
     }
-
 
 }

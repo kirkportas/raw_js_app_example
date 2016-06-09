@@ -1,12 +1,15 @@
 if (GFT_APP == undefined) { console.error("Incorrect JS load error"); }
 var GFT_APP = window.GFT_APP || {};
 GFT_APP.tasks = {
-    // "include" required modules and controllers & give a convenient local name
-    api: GFT_APP.api,    // *This is a load-order dependency
+    // Include vars. Explicitly define locally used controllers etc.
+    api: GFT_APP.api,
     core: GFT_APP,
-    // Set vars
+    require_confirmation: true, // Require confirm on deleteions
+
+    // State vars
     task_items: [],      // This will store task items
     initLoad: true,
+
     // UI bound vars
     newTaskTitle: null,
 
@@ -33,10 +36,32 @@ GFT_APP.tasks = {
     },
 
     deleteTask: function(task_id) {
-        if (task_id !== null) { // e.g. Validate object
-            // this.task_items.remove( Task.where('id': task_id) );
+        if (DEBUG) { console.log('deleteTask() for id: ' + task_id); }
+        var confirmed = false;
+        if (this.require_confirmation) {
+            confirmed = window.confirm("Are you sure  to delete this?"); // Would be moved to a confirmation module
+        }
+
+        if (!this.require_confirmation || confirmed) {
+            // Search task_items by ID
+            var task = $.grep(this.task_items, function(item){ return item.id == task_id; }); // == for demo ease, === needed
+
+            if (task.length == 1) {
+                // access with task[0]. Delete task object
+                var i = this.task_items.indexOf( task[0] );   // inefficient but effective
+                this.task_items.splice(i,1);
+            } else {
+                if (task.length == 0) {
+                    console.error('Task Not found');
+                } else {
+                    console.error("Duplicate Task IDs found: "+ task[0].id);
+                }
+            }
+
+            this.api.saveTasks(this.task_items);
+            this.refreshTaskList();
         } else {
-            // Notify: invalid Task
+            // Delete canceled.
         }
     },
 
@@ -54,22 +79,8 @@ GFT_APP.tasks = {
         // This is an incomplete implementation. We'd want to refresh just the partial & not the whole page.
         var context = {
             placeholder: "Add items to list",
-            tasks: this.task_items // ["Write Code", "Push Code"]
+            tasks: this.task_items
         };
         this.core.renderPage("landing", context, "#landing-content");
     }
-
-    // onDeleteConfirm: function (buttonIndex) {
-    //     if (buttonIndex === 1) {
-    //         auth.handleLogout();
-    //     }
-    // },
-    // showConfirmationDialog: function () {
-    //     window.confirm(
-    //         'Are you sure you would like to log out?',
-    //         this.onDeleteConfirm,
-    //         null,
-    //         null
-    //     );
-    // }
 };

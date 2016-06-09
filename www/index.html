@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Kirk <3 JS</title>
+
     <meta charset="utf-8"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport"  content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
-          <!-- removed from viewport: , target-densitydpi=device-dpi -->
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
 
     <!-- Jquery + Handlebars -->
@@ -23,48 +24,34 @@
     <script type="text/javascript" src="js/models/task.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/tasks.js"></script>
-
-    <!-- Handlebars templates -->
-
-    <!-- /Handlebars templates -->
-
-    <title>Kirk <3 JS</title>
 </head>
 
 <body>
-    <!-- Main Page -->
     <!-- Bootstrap container and an initial row -->
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <div class="col-md-4">
+                    <img id="logo_l" src="img/gft.jpg" />
+                </div>
+                <div class="col-md-4">
                 <!-- This is the targeted div for a Single-Page App -->
-                <div id="landing-content">
-                    <!-- Default display in case of Handlebars error -->
-                    <h3> Oh my your handlebars didn't compile! </h3>
+                    <div id="landing-content">
+                        <!-- Default display in case of Handlebars error -->
+                        <h3> Oh my your handlebars didn't compile! </h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img id="logo_r" src="img/gft.jpg" />
                 </div>
             </div>
         </div>
     </div>
     <!-- END Main Page -->
 
-    <!-- Init Handlebars -->
+    <!-- Init GFT App -->
     <script>
-        // $(document).on("pageload",function(){
-        //   GFT_APP.init();
-        // });
         $(function () { GFT_APP.init(); });
-    </script>
-
-    <!-- Extend Storage with some localStorage get/set helpers -->
-    <script>
-        Storage.prototype.setObject = function(key, value) {
-            this.setItem(key, JSON.stringify(value));
-        }
-
-        Storage.prototype.getObject = function(key) {
-            var value = this.getItem(key);
-            return value && JSON.parse(value);
-        }
     </script>
 </body>
 </html>
