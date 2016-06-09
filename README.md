@@ -9,16 +9,13 @@ npm install
 grunt handlebars
 
 
-
 ## Running the app
 Open /www/index.html
 
-
+## Running Tests
+Load /www/tests/qunit.html
 
 ## Modifying the app
 Make changes
 run 'grunt handlebars'
 Reload index.html
-
-## Tests
-Load /www/tests/qunit.html
